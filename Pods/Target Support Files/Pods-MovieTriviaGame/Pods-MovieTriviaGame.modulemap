@@ -1,0 +1,6 @@
+framework module Pods_MovieTriviaGame {
+  umbrella header "Pods-MovieTriviaGame-umbrella.h"
+
+  export *
+  module * { export * }
+}
