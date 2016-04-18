@@ -15,6 +15,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		
+		
+		
+		//code to define the frame of the whole app
+		self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		//self.window?.backgroundColor = UIColor.whiteColor()
+		let rootVc = MTGQuizViewController() //first page
+	
+		let navCtr = UINavigationController(rootViewController: rootVc)
+		self.window?.rootViewController = navCtr
+		self.window?.makeKeyAndVisible()
+		
 		// Override point for customization after application launch.
 		return true
 	}
