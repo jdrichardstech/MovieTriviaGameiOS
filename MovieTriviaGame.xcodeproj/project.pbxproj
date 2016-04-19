@@ -12,6 +12,8 @@
 		053B35801CC53DD400420A25 /* MTGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B357F1CC53DD400420A25 /* MTGViewController.swift */; };
 		053B35821CC54C3A00420A25 /* MTGQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B35811CC54C3A00420A25 /* MTGQuizViewController.swift */; };
 		053B35841CC5586700420A25 /* MTGModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B35831CC5586700420A25 /* MTGModel.swift */; };
+		05AC4E3A1CC6A81500288CEE /* backgound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05AC4E381CC6A81500288CEE /* backgound@2x.png */; };
+		05AC4E3B1CC6A81500288CEE /* backgound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05AC4E391CC6A81500288CEE /* backgound@3x.png */; };
 		E870587C8BBBF352FFC87542 /* Pods_MovieTriviaGame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC423EA8895A895534962F4 /* Pods_MovieTriviaGame.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,8 @@
 		053B357F1CC53DD400420A25 /* MTGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MTGViewController.swift; path = ../ViewControllers/MTGViewController.swift; sourceTree = "<group>"; };
 		053B35811CC54C3A00420A25 /* MTGQuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTGQuizViewController.swift; sourceTree = "<group>"; };
 		053B35831CC5586700420A25 /* MTGModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTGModel.swift; sourceTree = "<group>"; };
+		05AC4E381CC6A81500288CEE /* backgound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgound@2x.png"; sourceTree = "<group>"; };
+		05AC4E391CC6A81500288CEE /* backgound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgound@3x.png"; sourceTree = "<group>"; };
 		8575F6D488B0913273FCCDEA /* Pods-MovieTriviaGame.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieTriviaGame.release.xcconfig"; path = "Pods/Target Support Files/Pods-MovieTriviaGame/Pods-MovieTriviaGame.release.xcconfig"; sourceTree = "<group>"; };
 		9AC423EA8895A895534962F4 /* Pods_MovieTriviaGame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieTriviaGame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD60E46AACB5477FA23B1AD4 /* Pods-MovieTriviaGame.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieTriviaGame.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MovieTriviaGame/Pods-MovieTriviaGame.debug.xcconfig"; sourceTree = "<group>"; };
@@ -61,6 +65,7 @@
 		053B35691CC5302300420A25 /* MovieTriviaGame */ = {
 			isa = PBXGroup;
 			children = (
+				05AC4E371CC6A81500288CEE /* image */,
 				053B357E1CC53DB600420A25 /* models */,
 				053B357D1CC53DA800420A25 /* BaseClasses */,
 				053B357C1CC53D9D00420A25 /* ViewControllers */,
@@ -93,6 +98,15 @@
 				053B35831CC5586700420A25 /* MTGModel.swift */,
 			);
 			path = models;
+			sourceTree = "<group>";
+		};
+		05AC4E371CC6A81500288CEE /* image */ = {
+			isa = PBXGroup;
+			children = (
+				05AC4E381CC6A81500288CEE /* backgound@2x.png */,
+				05AC4E391CC6A81500288CEE /* backgound@3x.png */,
+			);
+			path = image;
 			sourceTree = "<group>";
 		};
 		93A23FFAA42EDCB233A3F9E1 /* Pods */ = {
@@ -174,7 +188,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05AC4E3B1CC6A81500288CEE /* backgound@3x.png in Resources */,
 				053B35721CC5302300420A25 /* Assets.xcassets in Resources */,
+				05AC4E3A1CC6A81500288CEE /* backgound@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
