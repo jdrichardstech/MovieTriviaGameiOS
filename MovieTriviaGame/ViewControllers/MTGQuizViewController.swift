@@ -49,8 +49,6 @@ class MTGQuizViewController: UIViewController {
 		self.questionLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 100)
 		self.questionLabel.textAlignment = .Center
 		self.questionLabel.backgroundColor = UIColor.clearColor()
-		//self.questionLabel?.text = "hello"
-		
 		self.questionLabel?.font = UIFont(name:"Menlo-Bold", size:13)
 		self.questionLabel?.textColor = UIColor.whiteColor()
 		self.questionLabel?.numberOfLines=0
@@ -279,7 +277,6 @@ class MTGQuizViewController: UIViewController {
 	func randomMovie()-> Int {
 		
 		let randomIndex = Int(arc4random_uniform(UInt32(3)))
-		
 		return(randomIndex)
 	
 		
@@ -386,7 +383,7 @@ class MTGQuizViewController: UIViewController {
 	func showWrongAnswerScreen(){
 		
 		print("Wrong answers \(self.sumWrongAnswers)")
-		self.scoreLabel?.text = "Right Answers - \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
+		self.scoreLabel?.text = "Right Answers: \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
 		self.wrongAnswerLabel.hidden = false
 		self.scoreLabel.hidden = false
 		self.nextQuestionButton.hidden = false
@@ -394,7 +391,7 @@ class MTGQuizViewController: UIViewController {
 	
 	func showRightAnswerScreen(){
 	
-		self.scoreLabel?.text = "Right Answers - \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
+		self.scoreLabel?.text = "Right Answers: \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
 		self.rightAnswerLabel.hidden = false
 		self.scoreLabel.hidden = false
 		self.nextQuestionButton.hidden = false
@@ -489,11 +486,18 @@ class MTGQuizViewController: UIViewController {
 	}
 	
 	func nextQuestionButtonAction(btn:UIButton){
+		self.numberQuestionsAskedCount += 1
+		if(self.numberQuestionsAskedCount < 3){
 		self.hideRightAnswerScreen()
 		self.hideWrongAnswerScreen()
 		self.questionChoice()
 		self.showButtons()
-		self.numberQuestionsAskedCount += 1
+		}
+		else{
+			
+			self.navigationController?.pushViewController(MTGScoreboardViewController(), animated: true)
+		}
+		
 		
 	
 	}
