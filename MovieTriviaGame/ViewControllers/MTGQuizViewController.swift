@@ -14,14 +14,18 @@ class MTGQuizViewController: UIViewController {
 	var questionLabel: UILabel!
 	var wrongAnswerLabel: UILabel!
 	var rightAnswerLabel: UILabel!
+	var scoreLabel: UILabel!
 	var choiceOneButton: UIButton!
 	var choiceTwoButton: UIButton!
 	var choiceThreeButton: UIButton!
 	var choiceFourButton: UIButton!
+	var nextQuestionButton: UIButton!
 	var questionNum: Int!
 	var rightAnswer: Int!
-	var sumRightAnswers: Int! = 0
-	var sumWrongAnswers: Int! = 0
+	var sumRightAnswers = 0
+	var sumWrongAnswers = 0
+	var numberQuestionsAskedCount = 0
+	
 	var movieArray = Array<MTGModel>()
  
 	
@@ -39,10 +43,11 @@ class MTGQuizViewController: UIViewController {
 		
 		
 		//MARK: - Properties
-		
+		//MARK: - Labels
 		// label that delivers the overview from themoviedb.org api
 		self.questionLabel = UILabel(frame:CGRect(x:10, y: 100, width: frame.size.width-20, height: 200))
 		self.questionLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 100)
+		self.questionLabel.textAlignment = .Center
 		self.questionLabel.backgroundColor = UIColor.clearColor()
 		//self.questionLabel?.text = "hello"
 		
@@ -53,12 +58,11 @@ class MTGQuizViewController: UIViewController {
 		//self.questionLabel?.adjustsFontSizeToFitWidth = true
 		view.addSubview(questionLabel)
 
-		//label for wrong answers **should start out hidden
-		self.wrongAnswerLabel = UILabel(frame:CGRect(x:10, y: 300, width: frame.size.width-20, height: 200))
-		self.wrongAnswerLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 100)
+		//wrong answer label **should start out hidden
+		self.wrongAnswerLabel = UILabel(frame:CGRect(x:10, y: 150, width: frame.size.width-20, height: 200))
+		self.wrongAnswerLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 150)
 		self.wrongAnswerLabel.backgroundColor = UIColor.clearColor()
-		//wrongAnswerLabel?.text = "hello"
-		
+		self.wrongAnswerLabel.textAlignment = .Center
 		self.wrongAnswerLabel?.font = UIFont(name:"Menlo-Bold", size:25)
 		self.wrongAnswerLabel?.textColor = UIColor.whiteColor()
 		self.wrongAnswerLabel?.numberOfLines=0
@@ -66,12 +70,11 @@ class MTGQuizViewController: UIViewController {
 		//wrongAnswerLabel?.adjustsFontSizeToFitWidth = true
 		view.addSubview(wrongAnswerLabel)
 
-		//labe for right answers should start out hidden
-		self.rightAnswerLabel = UILabel(frame:CGRect(x:10, y: 300, width: frame.size.width-20, height: 200))
-		self.rightAnswerLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 100)
+		//correct answer label should start out hidden
+		self.rightAnswerLabel = UILabel(frame:CGRect(x:10, y: 150, width: frame.size.width-20, height: 50))
+		self.rightAnswerLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 150)
 		self.rightAnswerLabel.backgroundColor = UIColor.clearColor()
-		//self.rightAnswerLabel?.text = "hello"
-		
+		self.rightAnswerLabel.textAlignment = .Center
 		self.rightAnswerLabel?.font = UIFont(name:"Menlo-Bold", size:25)
 		self.rightAnswerLabel?.textColor = UIColor.whiteColor()
 		self.rightAnswerLabel?.numberOfLines=0
@@ -80,6 +83,20 @@ class MTGQuizViewController: UIViewController {
 		view.addSubview(rightAnswerLabel)
 		
 		
+		
+		//score label start out hidden
+		self.scoreLabel = UILabel(frame:CGRect(x:10, y: 250, width: frame.size.width-20, height: 50))
+		self.scoreLabel.center = CGPoint(x: 0.5 * frame.size.width, y: 250)
+		self.scoreLabel.backgroundColor = UIColor.clearColor()
+		self.scoreLabel.textAlignment = .Center
+		self.scoreLabel?.font = UIFont(name:"Menlo-Bold", size:14)
+		self.scoreLabel?.textColor = UIColor.whiteColor()
+		self.scoreLabel?.numberOfLines=0
+		self.scoreLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+		//scoreLabel?.adjustsFontSizeToFitWidth = true
+		view.addSubview(scoreLabel)
+		
+		//MARK: - Buttons
 		//choiceOneButton
 		self.choiceOneButton = UIButton(type: .Custom)
 		
@@ -169,11 +186,37 @@ class MTGQuizViewController: UIViewController {
 		
 		
 		
+		
+		//next question button starts hidden
+		self.nextQuestionButton = UIButton(type: .Custom)
+		
+		self.nextQuestionButton.frame = CGRect(x: 0, y: 400, width: frame.size.width-20, height: 45)
+		self.nextQuestionButton.center = CGPoint(x: 0.5 * frame.size.width, y: 400)
+		self.nextQuestionButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+		self.nextQuestionButton.setTitle("Next Question", forState: .Normal)
+		self.nextQuestionButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+		self.nextQuestionButton.titleLabel?.textAlignment = .Center
+		self.nextQuestionButton.titleLabel?.font = UIFont(name: "Menlo-Bold", size: 14)
+		self.nextQuestionButton.layer.cornerRadius = 10
+		self.nextQuestionButton.layer.borderWidth = 1
+		self.nextQuestionButton.titleLabel?.numberOfLines = 0;
+		self.nextQuestionButton.titleLabel?.adjustsFontSizeToFitWidth = true
+		self.nextQuestionButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+		
+		
+		self.nextQuestionButton.addTarget(self, action: #selector(self.nextQuestionButtonAction(_:)), forControlEvents: .TouchUpInside)
+		
+		view.addSubview(nextQuestionButton)
+		
+		
+		
 
 		
 		//hide answer screens
 		self.hideRightAnswerScreen()
 		self.hideWrongAnswerScreen()
+		self.scoreLabel.hidden = true
+		self.nextQuestionButton.hidden = true
 		
 		self.view = view
 		
@@ -229,24 +272,7 @@ class MTGQuizViewController: UIViewController {
 	
 	
 	
-//	func questionFunction(){
-//	
-//	self.questionLabel?.text = "\(self.movieArray[0].overview)"
-//	self.choiceOneButton.setTitle("\(self.movieArray[randomMovie()].title)", forState: .Normal)
-//	self.choiceTwoButton.setTitle("\(self.movieArray[randomMovie()].title)", forState: .Normal)
-//	self.choiceThreeButton.setTitle("\(self.movieArray[randomMovie()].title)", forState: .Normal)
-//	self.choiceFourButton.setTitle("\(self.movieArray[randomMovie()].title)", forState: .Normal)
-//	
-//	}
-//	
-	
-//	func randomButton() -> String{
-//		let arr = ["choiceOneButton","choiceTwoButton","choiceThreeButton","choiceFourButton"]
-//		let randomIndex = Int(arc4random_uniform(UInt32(arr.count)))
-//		print (arr[randomIndex])
-//		return arr[randomIndex]
-//	}
-	
+
 	
 	
 	//this random finds the movies from the api
@@ -275,6 +301,9 @@ class MTGQuizViewController: UIViewController {
 		let wrongQuestion2 = self.randomMovie()
 		let wrongQuestion3 = self.randomMovie()
 		
+		self.rightAnswerLabel?.text = "YOU GOT IT!!!"
+		
+		
 		switch(self.questionNum){
 			
 		case 0:
@@ -283,8 +312,8 @@ class MTGQuizViewController: UIViewController {
 			self.choiceTwoButton.setTitle("\(self.movieArray[wrongQuestion1].title)", forState: .Normal)
 			self.choiceThreeButton.setTitle("\(self.movieArray[wrongQuestion2].title)", forState: .Normal)
 			self.choiceFourButton.setTitle("\(self.movieArray[wrongQuestion3].title)", forState: .Normal)
-			self.wrongAnswerLabel?.text = "WRONG!!! \r The Answer is: \r \(self.movieArray[rightQuestion].title) \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
-			self.rightAnswerLabel?.text = "YOU GOT IT!!! \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
+			self.wrongAnswerLabel?.text = "WRONG!!!\r\rThe Answer is: \r \(self.movieArray[rightQuestion].title)"
+			self.rightAnswerLabel?.text = "YOU GOT IT!!!"
 			self.rightAnswer = 1
 			
 		case 1:
@@ -294,8 +323,9 @@ class MTGQuizViewController: UIViewController {
 			self.choiceTwoButton.setTitle("\(self.movieArray[rightQuestion].title)", forState: .Normal)
 			self.choiceThreeButton.setTitle("\(self.movieArray[wrongQuestion2].title)", forState: .Normal)
 			self.choiceFourButton.setTitle("\(self.movieArray[wrongQuestion3].title)", forState: .Normal)
-			self.wrongAnswerLabel?.text = "WRONG!!! \r The Answer is: \r\r \(self.movieArray[rightQuestion].title) \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers )"
-			self.rightAnswerLabel?.text = "YOU GOT IT!!! \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
+			
+			self.wrongAnswerLabel?.text = "WRONG!!!\r\rThe Answer is:\r\(self.movieArray[rightQuestion].title)"
+			
 			self.rightAnswer = 2
 			
 		case 2:
@@ -305,8 +335,9 @@ class MTGQuizViewController: UIViewController {
 			self.choiceTwoButton.setTitle("\(self.movieArray[wrongQuestion2].title)", forState: .Normal)
 			self.choiceThreeButton.setTitle("\(self.movieArray[rightQuestion].title)", forState: .Normal)
 			self.choiceFourButton.setTitle("\(self.movieArray[wrongQuestion3].title)", forState: .Normal)
-			self.wrongAnswerLabel?.text = "WRONG!!! \r The Answer is: \r \r\r\(self.movieArray[rightQuestion].title) \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
-			self.rightAnswerLabel?.text = "YOU GOT IT!!! \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
+			
+			self.wrongAnswerLabel?.text = "WRONG!!!\r\rThe Answer is:\r\(self.movieArray[rightQuestion].title)"
+			
 			self.rightAnswer = 3
 		
 		case 3:
@@ -316,8 +347,8 @@ class MTGQuizViewController: UIViewController {
 			self.choiceTwoButton.setTitle("\(self.movieArray[wrongQuestion2].title)", forState: .Normal)
 			self.choiceThreeButton.setTitle("\(self.movieArray[wrongQuestion3].title)", forState: .Normal)
 			self.choiceFourButton.setTitle("\(self.movieArray[rightQuestion].title)", forState: .Normal)
-			self.wrongAnswerLabel?.text = "WRONG!!! \r The Answer is: \r\r\r \(self.movieArray[rightQuestion].title) \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
-			self.rightAnswerLabel?.text = "YOU GOT IT!!! \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
+			
+			self.wrongAnswerLabel?.text = "WRONG!!!\r\rThe Answer is:\r\(self.movieArray[rightQuestion].title)"
 			self.rightAnswer = 4
 			
 		default:
@@ -326,8 +357,8 @@ class MTGQuizViewController: UIViewController {
 			self.choiceTwoButton.setTitle("\(self.movieArray[wrongQuestion2].title)", forState: .Normal)
 			self.choiceThreeButton.setTitle("\(self.movieArray[rightQuestion].title)", forState: .Normal)
 			self.choiceFourButton.setTitle("\(self.movieArray[wrongQuestion3].title)", forState: .Normal)
-			self.wrongAnswerLabel?.text = "WRONG!!! \r The Answer is: \r \r\r\(self.movieArray[rightQuestion].title) \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
-			self.rightAnswerLabel?.text = "YOU GOT IT!!! \r \(self.sumRightAnswers) Right Answers \r \(self.sumWrongAnswers) Wrong Answers"
+			
+			self.wrongAnswerLabel?.text = "WRONG!!! \r\rThe Answer is:\r\(self.movieArray[rightQuestion].title)"
 			self.rightAnswer = 3
 	
 			}
@@ -351,32 +382,61 @@ class MTGQuizViewController: UIViewController {
 		self.wrongAnswerLabel.hidden = true
 	}
 	
+	//MARK: - Answer Screens
 	func showWrongAnswerScreen(){
+		
+		print("Wrong answers \(self.sumWrongAnswers)")
+		self.scoreLabel?.text = "Right Answers - \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
 		self.wrongAnswerLabel.hidden = false
+		self.scoreLabel.hidden = false
+		self.nextQuestionButton.hidden = false
+	}
+	
+	func showRightAnswerScreen(){
+	
+		self.scoreLabel?.text = "Right Answers - \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
+		self.rightAnswerLabel.hidden = false
+		self.scoreLabel.hidden = false
+		self.nextQuestionButton.hidden = false
 	
 	}
 	
 	func hideWrongAnswerScreen(){
 		self.wrongAnswerLabel.hidden = true
+		self.scoreLabel.hidden = true
+		self.nextQuestionButton.hidden = true
 	}
 	
 	func hideRightAnswerScreen(){
-	self.rightAnswerLabel.hidden = true
+		self.rightAnswerLabel.hidden = true
+		self.scoreLabel.hidden = true
+		self.nextQuestionButton.hidden = true
 	}
 	
-	func showRightAnswerScreen(){
-		self.rightAnswerLabel.hidden = false
+	func addToRightAnswer(){
+		self.sumRightAnswers += 1
+	}
+	
+	func addToWrongAnswer(){
+		self.sumWrongAnswers += 1
+	
 	}
 	
 	
+
+	
+	
+	//MARK: - Button Functions
 	func choiceOneButtonAction(btn:UIButton){
 		
 		if(self.rightAnswer == 1){
+			self.addToRightAnswer()
 			self.hideButtons()
 			self.showRightAnswerScreen()
 			print("right")
 		}
 		else{
+			self.addToWrongAnswer()
 			self.hideButtons()
 			self.showWrongAnswerScreen()
 			print("wrong")
@@ -385,11 +445,14 @@ class MTGQuizViewController: UIViewController {
 	}
 	func choiceTwoButtonAction(btn:UIButton){
 		if(self.rightAnswer == 2){
+			self.addToRightAnswer()
 			self.hideButtons()
 			self.showRightAnswerScreen()
+			
 			print("right")
 		}
 		else{
+			self.addToWrongAnswer()
 			self.hideButtons()
 			self.showWrongAnswerScreen()
 			print("wrong")
@@ -397,29 +460,45 @@ class MTGQuizViewController: UIViewController {
 	}
 	func choiceThreeButtonAction(btn:UIButton){
 		if(self.rightAnswer == 3){
+			self.addToRightAnswer()
 			self.hideButtons()
 			self.showRightAnswerScreen()
-			
 			print("right")
 		}
 		else{
-			self.hideButtons()
+			self.addToWrongAnswer()
 			self.showWrongAnswerScreen()
+			self.hideButtons()
 			print("wrong")
 		}
 	}
 	func choiceFourButtonAction(btn:UIButton){
 		if(self.rightAnswer == 4){
+			self.addToRightAnswer()
 			self.hideButtons()
 			self.showRightAnswerScreen()
 			print("right")
 		}
 		else{
+			self.addToWrongAnswer()
 			self.hideButtons()
 			self.showWrongAnswerScreen()
 			print("wrong")
+			
 		}
 	}
+	
+	func nextQuestionButtonAction(btn:UIButton){
+		self.hideRightAnswerScreen()
+		self.hideWrongAnswerScreen()
+		self.questionChoice()
+		self.showButtons()
+		self.numberQuestionsAskedCount += 1
+		
+	
+	}
+	
+	
 
     /*
     // MARK: - Navigation
