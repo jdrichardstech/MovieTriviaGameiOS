@@ -275,8 +275,10 @@ class MTGQuizViewController: UIViewController {
 	
 	//this random finds the movies from the api
 	func randomMovie()-> Int {
+		//	let movies = ["rightQuestion", "wrongQuestion1","wrongQuestion2","wrongQuestion3"]
 		
 		let randomIndex = Int(arc4random_uniform(UInt32(3)))
+		
 		return(randomIndex)
 	
 		
@@ -291,15 +293,16 @@ class MTGQuizViewController: UIViewController {
 	}
 	
 	func questionChoice(){
-		
+	
 		
 		let rightQuestion  = self.randomMovie()
 		let wrongQuestion1 = self.randomMovie()
 		let wrongQuestion2 = self.randomMovie()
 		let wrongQuestion3 = self.randomMovie()
 		
-		self.rightAnswerLabel?.text = "YOU GOT IT!!!"
 		
+		
+		self.rightAnswerLabel?.text = "YOU GOT IT!!!"
 		
 		switch(self.questionNum){
 			
@@ -487,7 +490,7 @@ class MTGQuizViewController: UIViewController {
 	
 	func nextQuestionButtonAction(btn:UIButton){
 		self.numberQuestionsAskedCount += 1
-		if(self.numberQuestionsAskedCount < 3){
+		if(self.numberQuestionsAskedCount < 11){
 		self.hideRightAnswerScreen()
 		self.hideWrongAnswerScreen()
 		self.questionChoice()
