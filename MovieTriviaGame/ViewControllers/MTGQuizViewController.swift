@@ -11,6 +11,7 @@ import Alamofire
 
 class MTGQuizViewController: UIViewController {
 
+	
 	var questionLabel: UILabel!
 	var wrongAnswerLabel: UILabel!
 	var rightAnswerLabel: UILabel!
@@ -24,7 +25,19 @@ class MTGQuizViewController: UIViewController {
 	var rightAnswer: Int!
 	var sumRightAnswers = 0
 	var sumWrongAnswers = 0
+	var totalPonits = 0
 	var numberQuestionsAskedCount = 0
+	var imageView: UIImageView!
+	var rightQuestionPoster: Int!
+	
+	
+	
+		
+	
+	
+	
+//	self.image = UIImage(data: data!)
+	
 	
 	var movieArray = Array<MTGModel>()
  
@@ -167,7 +180,6 @@ class MTGQuizViewController: UIViewController {
 		self.choiceFourButton.frame = CGRect(x: 0, y: 455, width: frame.size.width-20, height: 45)
 		self.choiceFourButton.center = CGPoint(x: 0.5 * frame.size.width, y: 455)
 		self.choiceFourButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
-		//self.choiceFourButton.setTitle("Arts", forState: .Normal)
 		self.choiceFourButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 		self.choiceFourButton.titleLabel?.textAlignment = .Center
 		self.choiceFourButton.titleLabel?.font = UIFont(name: "Menlo-Bold", size: 14)
@@ -207,14 +219,18 @@ class MTGQuizViewController: UIViewController {
 		view.addSubview(nextQuestionButton)
 		
 		
+	
 		
 
 		
 		//hide answer screens
+		
 		self.hideRightAnswerScreen()
 		self.hideWrongAnswerScreen()
 		self.scoreLabel.hidden = true
 		self.nextQuestionButton.hidden = true
+		
+		
 		
 		self.view = view
 		
@@ -245,11 +261,13 @@ class MTGQuizViewController: UIViewController {
 						result.populate(movieInfo)
 						self.movieArray.append(result)
 					}
-				
+					
+					//self.pickMovie()
+//					self.randomMovie()
 					self.pickCorrectButton()
 					self.questionChoice()
 					
-					print(self.questionNum)
+					//print(self.questionNum)
 					
 					
 				
@@ -267,38 +285,68 @@ class MTGQuizViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 	
+	//MARK: - My Functions
 	
 	
 	
-
-	
-	
-	//this random finds the movies from the api
+	//this random chooses a number between 0 and 4 for the movieArray index
 	func randomMovie()-> Int {
-		//	let movies = ["rightQuestion", "wrongQuestion1","wrongQuestion2","wrongQuestion3"]
 		
-		let randomIndex = Int(arc4random_uniform(UInt32(3)))
+		let randomIndex = Int(arc4random_uniform(UInt32(5)))
 		
 		return(randomIndex)
-	
-		
 	}
-	//this random chooses the button to make the correct answer
-	func pickCorrectButton() ->Int{
+	
+	
+	
+	
+//	func randomMovie(){
+//		var x = 0
+//		
+//		//let randomIndex = Int(arc4random_uniform(UInt32(3)))
+//		repeat{
+//			self.movieChoicesArray = []
+//			self.moviesSandboxArray = []
+//			for _ in 0..<20{
+//				x = Int(arc4random_uniform(UInt32(20)))
+//				self.moviesSandboxArray.append(x)
+//			}
+//			self.movieChoicesArray = Array(Set(moviesSandboxArray))
+//			
+//		} while self.movieChoicesArray.count < 4
+//		
+//		self.rightQuestion = self.movieChoicesArray[0]
+//		self.wrongQuestion1 = self.movieChoicesArray[1]
+//		self.wrongQuestion2 = self.movieChoicesArray[2]
+//		self.wrongQuestion3 = self.movieChoicesArray[3]
+//		
+//	}
+	
+	
+	
+	
+	
+	//this random chooses the button that holds the correct answer
+	func pickCorrectButton(){
 		
 		 self.questionNum = Int(arc4random_uniform(UInt32(4)))
+		print("Questionnum: \(questionNum)")
 		
-		return(questionNum)
 		
 	}
+	
+
 	
 	func questionChoice(){
 	
 		
 		let rightQuestion  = self.randomMovie()
-		let wrongQuestion1 = self.randomMovie()
-		let wrongQuestion2 = self.randomMovie()
-		let wrongQuestion3 = self.randomMovie()
+		
+		let wrongQuestion1 = self.randomMovie()+5
+		let wrongQuestion2 = self.randomMovie()+11
+		let wrongQuestion3 = self.randomMovie()+15
+		self.rightQuestionPoster = rightQuestion
+	
 		
 		
 		
@@ -365,36 +413,21 @@ class MTGQuizViewController: UIViewController {
 	
 	}
 	
-	func hideButtons(){
-		self.questionLabel.hidden = true
-		self.choiceOneButton.hidden = true
-		self.choiceTwoButton.hidden = true
-		self.choiceThreeButton.hidden = true
-		self.choiceFourButton.hidden = true
-	}
 	
-	func showButtons(){
-		self.questionLabel.hidden = false
-		self.choiceOneButton.hidden = false
-		self.choiceTwoButton.hidden = false
-		self.choiceThreeButton.hidden = false
-		self.choiceFourButton.hidden = false
-		self.wrongAnswerLabel.hidden = true
-	}
 	
 	//MARK: - Answer Screens
 	func showWrongAnswerScreen(){
-		
+		self.pickCorrectButton()
 		print("Wrong answers \(self.sumWrongAnswers)")
-		self.scoreLabel?.text = "Right Answers: \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
+		self.scoreLabel?.text = "Right Answers: \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)\rTotal Points: \(self.totalPonits)"
 		self.wrongAnswerLabel.hidden = false
 		self.scoreLabel.hidden = false
 		self.nextQuestionButton.hidden = false
 	}
 	
 	func showRightAnswerScreen(){
-	
-		self.scoreLabel?.text = "Right Answers: \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)"
+		self.pickCorrectButton()
+		self.scoreLabel?.text = "Right Answers: \(self.sumRightAnswers) \rWrong Answers: \(self.sumWrongAnswers)\rTotal Points: \(self.totalPonits)"
 		self.rightAnswerLabel.hidden = false
 		self.scoreLabel.hidden = false
 		self.nextQuestionButton.hidden = false
@@ -414,11 +447,14 @@ class MTGQuizViewController: UIViewController {
 	}
 	
 	func addToRightAnswer(){
-		self.sumRightAnswers += 1
+		self.sumRightAnswers += 10
+		self.totalPonits = self.sumRightAnswers + self.sumWrongAnswers
 	}
 	
 	func addToWrongAnswer(){
-		self.sumWrongAnswers += 1
+		self.sumWrongAnswers -= 5
+		self.totalPonits = self.sumRightAnswers + self.sumWrongAnswers
+		
 	
 	}
 	
@@ -427,8 +463,28 @@ class MTGQuizViewController: UIViewController {
 	
 	
 	//MARK: - Button Functions
+	
+	
+	func hideButtons(){
+		self.questionLabel.hidden = true
+		self.choiceOneButton.hidden = true
+		self.choiceTwoButton.hidden = true
+		self.choiceThreeButton.hidden = true
+		self.choiceFourButton.hidden = true
+	}
+	
+	func showButtons(){
+		self.questionLabel.hidden = false
+		self.choiceOneButton.hidden = false
+		self.choiceTwoButton.hidden = false
+		self.choiceThreeButton.hidden = false
+		self.choiceFourButton.hidden = false
+		self.wrongAnswerLabel.hidden = true
+	}
+	
+	
 	func choiceOneButtonAction(btn:UIButton){
-		
+
 		if(self.rightAnswer == 1){
 			self.addToRightAnswer()
 			self.hideButtons()
@@ -444,6 +500,8 @@ class MTGQuizViewController: UIViewController {
 		}
 	}
 	func choiceTwoButtonAction(btn:UIButton){
+
+		
 		if(self.rightAnswer == 2){
 			self.addToRightAnswer()
 			self.hideButtons()
@@ -459,6 +517,7 @@ class MTGQuizViewController: UIViewController {
 		}
 	}
 	func choiceThreeButtonAction(btn:UIButton){
+
 		if(self.rightAnswer == 3){
 			self.addToRightAnswer()
 			self.hideButtons()
@@ -473,6 +532,7 @@ class MTGQuizViewController: UIViewController {
 		}
 	}
 	func choiceFourButtonAction(btn:UIButton){
+
 		if(self.rightAnswer == 4){
 			self.addToRightAnswer()
 			self.hideButtons()
@@ -490,11 +550,15 @@ class MTGQuizViewController: UIViewController {
 	
 	func nextQuestionButtonAction(btn:UIButton){
 		self.numberQuestionsAskedCount += 1
-		if(self.numberQuestionsAskedCount < 11){
+		//self.totalPonits = self.sumRightAnswers + self.sumWrongAnswers
+		if(self.numberQuestionsAskedCount < 10){
 		self.hideRightAnswerScreen()
 		self.hideWrongAnswerScreen()
+		
 		self.questionChoice()
 		self.showButtons()
+			
+		//print ("Total points: \(self.totalPonits)")
 		}
 		else{
 			

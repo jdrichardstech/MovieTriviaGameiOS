@@ -15,6 +15,7 @@ class MTGModel: NSObject {
 	var id: Double!
 	var count: Int!
 	var randomIndex:Int!
+	var posterPath: String!
 	
 
 	
@@ -22,6 +23,10 @@ class MTGModel: NSObject {
 	
 	
 	func populate(info: Dictionary<String,AnyObject>){
+		
+		if let posterPath = info["poster_path"] as? String{
+			self.posterPath = posterPath
+		}
 		
 		if let overview = info["overview"] as? String{
 			self.overview = overview

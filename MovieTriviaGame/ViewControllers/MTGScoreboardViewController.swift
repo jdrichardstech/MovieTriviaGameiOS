@@ -11,6 +11,8 @@ import UIKit
 class MTGScoreboardViewController: UIViewController {
 
 	var scoreboardTempLabel: UILabel!
+	var totalPointsLabel:UILabel!
+	
 	
 	
 	
@@ -36,9 +38,6 @@ class MTGScoreboardViewController: UIViewController {
 		//self.questionLabel?.adjustsFontSizeToFitWidth = true
 		view.addSubview(scoreboardTempLabel)
 		
-		
-		
-		self.view = view
 	}
 	
 	
