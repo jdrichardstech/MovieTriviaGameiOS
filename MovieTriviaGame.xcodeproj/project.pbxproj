@@ -12,6 +12,7 @@
 		053B35801CC53DD400420A25 /* MTGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B357F1CC53DD400420A25 /* MTGViewController.swift */; };
 		053B35821CC54C3A00420A25 /* MTGQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B35811CC54C3A00420A25 /* MTGQuizViewController.swift */; };
 		053B35841CC5586700420A25 /* MTGModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B35831CC5586700420A25 /* MTGModel.swift */; };
+		0578760B1CCC01E400B9CDD6 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0578760A1CCC01E400B9CDD6 /* global.swift */; };
 		05AC4E3A1CC6A81500288CEE /* backgound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05AC4E381CC6A81500288CEE /* backgound@2x.png */; };
 		05AC4E3B1CC6A81500288CEE /* backgound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05AC4E391CC6A81500288CEE /* backgound@3x.png */; };
 		05AC4E3F1CC6D54700288CEE /* MTGScoreboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AC4E3E1CC6D54700288CEE /* MTGScoreboardViewController.swift */; };
@@ -26,6 +27,7 @@
 		053B357F1CC53DD400420A25 /* MTGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MTGViewController.swift; path = ../ViewControllers/MTGViewController.swift; sourceTree = "<group>"; };
 		053B35811CC54C3A00420A25 /* MTGQuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTGQuizViewController.swift; sourceTree = "<group>"; };
 		053B35831CC5586700420A25 /* MTGModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTGModel.swift; sourceTree = "<group>"; };
+		0578760A1CCC01E400B9CDD6 /* global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = global.swift; path = MovieTriviaGame/global.swift; sourceTree = "<group>"; };
 		05AC4E381CC6A81500288CEE /* backgound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgound@2x.png"; sourceTree = "<group>"; };
 		05AC4E391CC6A81500288CEE /* backgound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgound@3x.png"; sourceTree = "<group>"; };
 		05AC4E3E1CC6D54700288CEE /* MTGScoreboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTGScoreboardViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 		053B355E1CC5302300420A25 = {
 			isa = PBXGroup;
 			children = (
+				0578760A1CCC01E400B9CDD6 /* global.swift */,
 				053B35691CC5302300420A25 /* MovieTriviaGame */,
 				053B35681CC5302300420A25 /* Products */,
 				93A23FFAA42EDCB233A3F9E1 /* Pods */,
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0578760B1CCC01E400B9CDD6 /* global.swift in Sources */,
 				053B35801CC53DD400420A25 /* MTGViewController.swift in Sources */,
 				053B35821CC54C3A00420A25 /* MTGQuizViewController.swift in Sources */,
 				053B35841CC5586700420A25 /* MTGModel.swift in Sources */,
