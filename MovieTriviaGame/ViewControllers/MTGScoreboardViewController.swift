@@ -94,13 +94,8 @@ class MTGScoreboardViewController: MTGViewController {
 		
 		
 		self.tryAgainButton.addTarget(self, action: #selector(self.newGameAction(_:)), forControlEvents: .TouchUpInside)
-		
-		
-//		self.choiceTwoButton.addTarget(self, action: #selector(self.choiceTwoButtonAction(_:)), forControlEvents: .TouchUpInside)
-		
-		
 		view.addSubview(tryAgainButton)
-		
+		showPlayAgainButton()
 		self.view = view
 	}
 	
@@ -108,14 +103,8 @@ class MTGScoreboardViewController: MTGViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		self.comment()
 		
-		if (mainInstance.totalPoints == 100){
-			tryAgainButton.hidden = true
-		}
-		else{
-			tryAgainButton.hidden = false
-		}
+		self.comment()
 		
         // Do any additional setup after loading the view.
     }
@@ -148,15 +137,37 @@ class MTGScoreboardViewController: MTGViewController {
 	
 	
 	func newGameAction(btn:UIButton){
-		mainInstance.totalPoints=0
-		mainInstance.sumRightAnswers=0
-		mainInstance.sumWrongAnswers=0
-		mainInstance.numberQuestionsAskedCount=0
-		self.navigationController?.pushViewController(MTGQuizViewController(), animated: true)
+//		mainInstance.gameNumber += 1
+		if(mainInstance.gameNumber < 3){
+			mainInstance.totalPoints=0
+			mainInstance.sumRightAnswers=0
+			mainInstance.sumWrongAnswers=0
+			mainInstance.numberQuestionsAskedCount=0
+			self.navigationController?.pushViewController(MTGQuizViewController(), animated: true)
+		}
+		else if(mainInstance.gameNumber>=3){
+			mainInstance.gameNumber =  0
+			mainInstance.totalPoints=0
+			mainInstance.sumRightAnswers=0
+			mainInstance.sumWrongAnswers=0
+			mainInstance.numberQuestionsAskedCount=0
+			self.navigationController?.pushViewController(MTGQuizViewController(), animated: true)
+		}
 	}
 	
 	
-	
+	func showPlayAgainButton(){
+		print(mainInstance.gameNumber)
+		
+		if (mainInstance.totalPoints == 100){
+			tryAgainButton.hidden = true
+		}
+		else{
+			tryAgainButton.hidden = false
+		}
+
+		
+	}
 	
 	
 

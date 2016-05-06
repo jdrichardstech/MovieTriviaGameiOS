@@ -10,7 +10,9 @@ import UIKit
 import Alamofire
 
 class MTGQuizViewController: MTGViewController {
-
+	
+	var rightButtonProgression = Array<Int>()
+	var movieChoiceProgression = Array<Int>()
 	var overviews = [AnyObject]()
 	var titles = [AnyObject]()
 	var questionLabel: UILabel!
@@ -164,7 +166,7 @@ class MTGQuizViewController: MTGViewController {
 		self.choiceThreeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 		self.choiceThreeButton.setTitleColor(UIColor.yellowColor(), forState: .Highlighted)
 		self.choiceThreeButton.titleLabel?.textAlignment = .Center
-		self.choiceThreeButton.titleLabel?.font = UIFont(name: "Menlo-Bold", size: 13)
+		self.choiceThreeButton.titleLabel?.font = UIFont(name: "Menlo-Bold", size: 14)
 
 		//self.choiceThreeButton.layer.cornerRadius = 10
 		//self.choiceThreeButton.layer.borderWidth = 1
@@ -233,7 +235,7 @@ class MTGQuizViewController: MTGViewController {
 		self.hideWrongAnswerScreen()
 		self.scoreLabel.hidden = true
 		self.nextQuestionButton.hidden = true
-		
+		self.gameChoice()
 		
 		
 		self.view = view
@@ -308,8 +310,8 @@ class MTGQuizViewController: MTGViewController {
 	func randomMovie()-> Int {
 		
 		//let randomIndex = Int(arc4random_uniform(UInt32(5)))
-		let movieChoiceProgression = [1,2,3,4,5,6,7,8,9,10,11]
-		let nextRightMovie = movieChoiceProgression[mainInstance.numberQuestionsAskedCount]
+		//self.movieChoiceProgression = mainInstance.moviesForGame1
+		let nextRightMovie = self.movieChoiceProgression[mainInstance.numberQuestionsAskedCount]
 		return(nextRightMovie)
 	}
 	
@@ -319,7 +321,8 @@ class MTGQuizViewController: MTGViewController {
 
 	
 	
-	
+//	var moviesForGame3 = [2,4,6,8,10,12,14,16,18,20,5]
+//	var rightButtonProgression1 = [0,2,1,3,2,0,3,3,1,1,2]
 	
 	
 	//this random chooses the button that holds the correct answer
@@ -327,8 +330,8 @@ class MTGQuizViewController: MTGViewController {
 		
 		 //self.questionNum = Int(arc4random_uniform(UInt32(4)))
 		//print("Questionnum: \(questionNum)")
-		let rightButtonProgression = [0,2,1,3,2,0,3,3,1,1,2]
-		self.nextRightButton = rightButtonProgression[mainInstance.numberQuestionsAskedCount]
+		//let rightButtonProgression = [0,2,1,3,2,0,3,3,1,1,2]
+		self.nextRightButton = self.rightButtonProgression[mainInstance.numberQuestionsAskedCount]
 		//print(self.numberQuestionsAskedCount)
 	}
 	
@@ -357,10 +360,10 @@ class MTGQuizViewController: MTGViewController {
 			self.wrongQuestion1 = self.titles[19]
 		}
 		if(self.wrongQuestion2 === titles[rightQuestion]){
-			self.wrongQuestion1 = self.titles[18]
+			self.wrongQuestion2 = self.titles[19]
 		}
 		if(self.wrongQuestion3 === titles[rightQuestion]){
-			self.wrongQuestion1 = self.titles[19]
+			self.wrongQuestion3 = self.titles[19]
 		}
 		print(wrongChoice1)
 		print(wrongChoice2)
@@ -583,11 +586,34 @@ class MTGQuizViewController: MTGViewController {
 		//print ("Total points: \(self.totalPonits)")
 		}
 		else{
-			
+			mainInstance.gameNumber += 1
 			self.navigationController?.pushViewController(MTGScoreboardViewController(), animated: true)
 		}
 		
 		
+	
+	}
+	
+	func gameChoice(){
+		
+		
+		switch mainInstance.gameNumber {
+		case 0:
+			self.rightButtonProgression = mainInstance.rightButtonProgression1
+			self.movieChoiceProgression = mainInstance.moviesForGame1
+		case 1:
+			self.rightButtonProgression = mainInstance.rightButtonProgression2
+			self.movieChoiceProgression = mainInstance.moviesForGame2
+		case 2:
+			self.rightButtonProgression = mainInstance.rightButtonProgression3
+			self.movieChoiceProgression = mainInstance.moviesForGame3
+		default:
+			self.rightButtonProgression = mainInstance.rightButtonProgression1
+			self.movieChoiceProgression = mainInstance.moviesForGame1
+		}
+		
+		
+	
 	
 	}
 	
